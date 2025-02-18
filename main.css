@@ -1,0 +1,1620 @@
+:root {
+    /* Palette colori moderna */
+    --primary-color: #1a237e;  /* Blu scuro elegante */
+    --secondary-color: #536dfe; /* Blu acceso moderno */
+    --background-color: #f3f4f8; /* Grigio chiaro neutro */
+    --text-color: #2c3e50; /* Blu scuro per il testo */
+    --border-color: #e2e8f0; /* Grigio chiaro per i bordi */
+    
+    /* Colori di stato */
+    --success-color: #00c853; /* Verde brillante */
+    --danger-color: #ff5252;  /* Rosso vivace */
+    --warning-color: #ffd740; /* Giallo ambrato */
+    --info-color: #40c4ff;    /* Azzurro chiaro */
+
+    /* Gradienti moderni */
+    --primary-gradient: linear-gradient(135deg, #1a237e, #3949ab);
+    --secondary-gradient: linear-gradient(135deg, #536dfe, #7986cb);
+    --success-gradient: linear-gradient(135deg, #00c853, #69f0ae);
+    --danger-gradient: linear-gradient(135deg, #ff5252, #ff8a80);
+    --warning-gradient: linear-gradient(135deg, #ffd740, #ffe57f);
+
+    /* Colori per i turni */
+    --morning-color: #536dfe;    /* Blu mattina */
+    --evening-color: #1a237e;    /* Blu sera */
+    --oncall-color: #00c853;     /* Verde reperibilità */
+    --vacation-color: #ff5252;   /* Rosso ferie */
+    --law104-color: #ffd740;     /* Giallo 104 */
+    --permit-color: #7c4dff;     /* Viola permessi */
+
+    /* Colori per i ruoli */
+    --role-tecnico: #536dfe;
+    --role-ufficio: #00c853;
+    --role-amministrazione: #7c4dff;
+    --role-contabilita: #ffd740;
+
+    /* Ombre e effetti */
+    --card-shadow: 0 4px 6px -1px rgba(26, 35, 126, 0.1), 
+                  0 2px 4px -2px rgba(26, 35, 126, 0.05);
+    --hover-shadow: 0 12px 32px rgba(26, 35, 126, 0.15);
+    --primary-shadow: 0 4px 20px rgba(83, 109, 254, 0.2);
+    --border-radius-lg: 24px;
+    --border-radius-md: 16px;
+    --border-radius-sm: 12px;
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar moderna */
+.sidebar {
+    width: 280px;
+    background: white;
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 0.5rem;
+}
+
+.sidebar nav ul li a {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-smooth);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar nav ul li a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: var(--primary-gradient);
+    transform: scaleY(0);
+    transition: transform var(--transition-smooth);
+}
+
+.sidebar nav ul li a:hover::before {
+    transform: scaleY(1);
+}
+
+.sidebar nav ul li a:hover {
+    padding-left: 2rem;
+    background: linear-gradient(to right, rgba(79, 70, 229, 0.1), transparent);
+}
+
+.sidebar nav ul li a.active {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Main content */
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Card design moderno */
+.card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--card-shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+    transition: transform var(--transition-smooth),
+                box-shadow var(--transition-smooth),
+                background-color var(--transition-smooth);
+    animation: scaleIn var(--transition-smooth);
+}
+
+.card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: var(--hover-shadow);
+}
+
+/* Bottoni moderni */
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.button:hover::after {
+    left: 100%;
+}
+
+.button-primary {
+    background: var(--primary-gradient);
+    box-shadow: var(--primary-shadow);
+    color: white;
+}
+
+.button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(79, 70, 229, 0.25);
+}
+
+.button-secondary {
+    background-color: #f1f5f9;
+    color: var(--text-color);
+}
+
+.button-secondary:hover {
+    background-color: #e2e8f0;
+}
+
+/* Form elements */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.95rem;
+    transition: all var(--transition-smooth);
+    background-color: #f8fafc;
+}
+
+.form-input:focus {
+    transform: translateY(-1px);
+    border-color: #4f46e5;
+    background: white;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+}
+
+/* Table design moderno */
+.table-container {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-smooth);
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th {
+    background-color: #f8fafc;
+    color: var(--text-color);
+    font-weight: 600;
+    text-align: left;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+tr {
+    transition: all var(--transition-fast);
+}
+
+tr:hover {
+    transform: scale(1.01);
+    background: linear-gradient(to right, #f8fafc, transparent);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Badge moderno */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: #f1f5f9;
+    color: var(--text-color);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-smooth);
+}
+
+.badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Notifiche moderne */
+.notification {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius-md);
+    background: white;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 1000;
+    animation: slideIn var(--transition-smooth);
+}
+
+/* Modal moderno */
+.modal {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+
+/* Filtri moderni */
+.filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: white;
+    border: 1.5px solid var(--border-color);
+    border-radius: 30px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.filter-chip.active {
+    background: var(--primary-gradient);
+    transform: translateY(-2px);
+}
+
+/* Filters */
+.checkbox-filters {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Table */
+.shifts-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Calendar */
+.calendar-view {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem;
+    margin-top: 1rem;
+    min-height: 600px;
+}
+
+#calendar {
+    height: 100%;
+    min-height: 600px;
+}
+
+.fc-event {
+    margin: 1px 0;
+    padding: 2px 4px;
+    border-radius: 3px;
+    border: none;
+    font-size: 0.9em;
+    transition: all var(--transition-smooth);
+}
+
+.fc-daygrid-event {
+    white-space: normal !important;
+    align-items: center;
+    margin: 2px !important;
+}
+
+.fc-daygrid-day-events {
+    margin-bottom: 0 !important;
+}
+
+.fc-event-time {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+/* Specific event styles */
+.fc-event.shift-morning,
+.fc-event.shift-evening,
+.fc-event.shift-on-call,
+.fc-event.shift-vacation,
+.fc-event.shift-law104,
+.fc-event.shift-permit {
+    color: white;
+    border: none;
+}
+
+.fc-event.shift-morning { background-color: var(--morning-color) !important; }
+.fc-event.shift-evening { background-color: var(--evening-color) !important; }
+.fc-event.shift-on-call { background-color: var(--oncall-color) !important; }
+.fc-event.shift-vacation { background-color: var(--vacation-color) !important; }
+.fc-event.shift-law104 { 
+    background-color: var(--law104-color) !important; 
+    color: var(--text-color) !important; 
+}
+.fc-event.shift-permit { background-color: var(--permit-color) !important; }
+
+.fc-event-turno {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.fc-event-ferie {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.fc-event-permesso {
+    background-color: #f1c40f;
+    border-color: #f1c40f;
+    color: #2c3e50;
+}
+
+.fc-day-today {
+    background-color: rgba(52, 152, 219, 0.1) !important;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.close {
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* Technicians table */
+.technicians-list {
+    margin-top: 2rem;
+}
+
+.technicians-list table {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.technicians-list th,
+.technicians-list td {
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.action-buttons button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: background-color 0.2s;
+}
+
+.action-buttons .edit-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.action-buttons .edit-btn:hover {
+    background-color: #2980b9;
+}
+
+.action-buttons .delete-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.action-buttons .delete-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Filter styles */
+.checkbox-filters label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    cursor: pointer;
+}
+
+.checkbox-filters input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.checkbox-filters .shift-tag {
+    font-size: 0.85rem;
+    padding: 0.15rem 0.5rem;
+}
+
+.filter-group {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.filter-group h4 {
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+/* Hover effect per i filtri */
+.checkbox-filters label:hover .shift-tag {
+    transform: translateX(2px);
+    transition: transform 0.2s ease;
+}
+
+/* Stile per filtri disattivati */
+.checkbox-filters input[type="checkbox"]:not(:checked) + .shift-tag {
+    opacity: 0.5;
+}
+
+/* Actions section */
+.actions {
+    margin-bottom: 1rem;
+}
+
+.primary-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.primary-button:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Radio group */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+    width: auto;
+}
+
+/* Textarea */
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Select */
+select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+}
+
+/* Tags per i turni */
+.shift-tag {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: white;
+    display: inline-block;
+}
+
+.shift-morning {
+    background-color: var(--morning-color);
+}
+
+.shift-evening {
+    background-color: var(--evening-color);
+}
+
+.shift-vacation {
+    background-color: var(--vacation-color);
+}
+
+.shift-law104 {
+    background-color: var(--law104-color);
+    color: var(--text-color);
+}
+
+.shift-permit {
+    background-color: var(--permit-color);
+}
+
+/* Selezione multipla date */
+.date-range-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.date-range-group label {
+    margin-bottom: 0;
+}
+
+select:invalid {
+    color: #666;
+}
+
+option[value=""] {
+    color: #666;
+}
+
+option {
+    color: var(--text-color);
+}
+
+.separator {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 1rem 0;
+}
+
+/* Stili per il file input nascosto */
+.hidden-file-input {
+    display: none;
+}
+
+/* Quarter view */
+.quarter-view {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.quarter-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.control-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.control-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.quarter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.month-calendar {
+    min-height: 400px;
+}
+
+/* Responsive layout */
+@media (max-width: 1200px) {
+    .quarter-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .quarter-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Calendar customization for quarter view */
+.month-calendar .fc-toolbar.fc-header-toolbar {
+    margin-bottom: 0.5em;
+}
+
+.month-calendar .fc-toolbar-title {
+    font-size: 1.2em;
+}
+
+.month-calendar .fc-button {
+    padding: 0.2em 0.4em;
+}
+
+/* Tags per i turni */
+.shift-on-call {
+    background-color: var(--oncall-color);
+    border-color: var(--oncall-color);
+    color: white;
+}
+
+/* Stili per il calendario */
+.fc-event.shift-on-call {
+    background-color: var(--oncall-color);
+    border-color: var(--oncall-color);
+    color: white;
+}
+
+/* Quarter view specific styles */
+.quarter-event {
+    font-size: 0.8em !important;
+    padding: 2px !important;
+    margin: 1px 0 !important;
+    text-align: center !important;
+}
+
+.month-calendar .fc-daygrid-event {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.month-calendar .fc-daygrid-day-events {
+    min-height: 1.4em !important;
+}
+
+/* Monthly view specific styles */
+.monthly-event {
+    margin: 2px 0 !important;
+    padding: 3px 6px !important;
+    border-radius: 4px !important;
+}
+
+.fc-daygrid-event-harness {
+    margin: 1px 0 !important;
+}
+
+.fc-daygrid-day-events {
+    padding: 2px !important;
+}
+
+.fc-event-main {
+    padding: 2px 4px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Migliora la visibilità del pulsante "more" */
+.fc-daygrid-more-link {
+    background: rgba(0,0,0,0.05);
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin: 2px 0;
+    font-size: 0.9em;
+}
+
+/* Stili per le statistiche */
+.statistics {
+    padding: 2rem;
+    background-color: #f8fafc;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--card-shadow);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: transform var(--transition-smooth),
+                box-shadow var(--transition-smooth),
+                background-color var(--transition-smooth);
+    animation: scaleIn var(--transition-smooth);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: var(--hover-shadow);
+}
+
+.stat-card h3 {
+    color: #1e293b;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    transition: height var(--transition-smooth);
+}
+
+.stat-card h3::before {
+    content: '';
+    position: absolute;
+    left: -1.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-radius: 2px;
+    transition: height var(--transition-smooth);
+}
+
+.stat-card:hover h3::before {
+    height: 28px;
+}
+
+/* Stili per il grafico principale */
+.chart-container {
+    position: relative;
+    height: 400px;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 16px;
+}
+
+/* Stili per il riepilogo mensile */
+.monthly-stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.monthly-stat {
+    background: #f8fafc;
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-smooth);
+    animation: scaleIn var(--transition-smooth);
+}
+
+.monthly-stat h4 {
+    color: #1e293b;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.monthly-stat h4::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 16px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-radius: 2px;
+}
+
+.monthly-stat h5 {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin: 1rem 0;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.monthly-stat h5 span {
+    color: #3498db;
+    font-weight: 600;
+    background: rgba(52, 152, 219, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+.monthly-stat ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.monthly-stat li {
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    background: white;
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-smooth);
+    animation: scaleIn var(--transition-smooth);
+}
+
+.monthly-stat li:hover {
+    transform: translateX(8px);
+    background: linear-gradient(to right, white, #f8fafc);
+    box-shadow: var(--card-shadow);
+}
+
+.monthly-stat li span:last-child {
+    font-weight: 500;
+    color: #1e293b;
+    background: #f1f5f9;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+/* Stili per le legende dei grafici */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1.2rem;
+    background: #f8fafc;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.9rem;
+    color: #64748b;
+    padding: 0.5rem 1rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+}
+
+/* Colori per i ruoli nelle statistiche con gradiente */
+.role-stat-tecnico { 
+    background: linear-gradient(135deg, var(--role-tecnico), #3949ab);
+}
+.role-stat-ufficio_tecnico { 
+    background: linear-gradient(135deg, var(--role-ufficio), #00e676);
+}
+.role-stat-amministrazione { 
+    background: linear-gradient(135deg, var(--role-amministrazione), #b388ff);
+}
+.role-stat-contabilita { 
+    background: linear-gradient(135deg, var(--role-contabilita), #ffecb3);
+}
+
+/* Personalizzazione dei grafici */
+.chart-container canvas {
+    margin-top: 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-container {
+        height: 300px;
+    }
+}
+
+/* Tooltip per gli eventi */
+.event-tooltip {
+    position: absolute;
+    background: white;
+    border-radius: 4px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 1000;
+    max-width: 250px;
+}
+
+/* Animazioni per gli eventi */
+.fc-event {
+    transition: all var(--transition-smooth);
+}
+
+.fc-event:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 5;
+}
+
+/* Stili per messaggi di errore */
+.error-message {
+    background-color: #e74c3c;
+    color: white;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    animation: slideIn var(--transition-smooth);
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Notifiche */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    color: white;
+    z-index: 1000;
+    animation: slideIn var(--transition-smooth);
+}
+
+.notification.success {
+    background-color: #27ae60;
+}
+
+.notification.error {
+    background-color: #e74c3c;
+}
+
+.notification.fade-out {
+    animation: slideOut var(--transition-smooth);
+}
+
+@keyframes slideOut {
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+/* Stili per le date nella tabella */
+.shifts-table td:first-child {
+    white-space: nowrap;
+    font-family: monospace;
+}
+
+/* Hover effect sulla riga della tabella */
+.shifts-table tbody tr {
+    transition: background-color 0.2s;
+}
+
+.shifts-table tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Conteggio totale */
+#totalShifts {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 4px;
+    text-align: right;
+}
+
+/* Search section */
+.search-section {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.date-filter {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Keyboard shortcuts tooltip */
+[data-shortcut]:hover::after {
+    content: attr(data-shortcut);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+/* Loading indicator */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    animation: loading 1s infinite;
+    z-index: 1000;
+}
+
+@keyframes loading {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Improved table styles */
+.shifts-table thead th {
+    position: sticky;
+    top: 0;
+    background: var(--primary-color);
+    z-index: 1;
+}
+
+.shifts-table tbody tr:nth-child(even) {
+    background-color: rgba(0,0,0,0.02);
+}
+
+/* Checkbox styles */
+.shift-select {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.delete-selected-btn {
+    margin-left: 1rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.delete-selected-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Highlight selected rows */
+tr.selected {
+    background-color: rgba(231, 76, 60, 0.1) !important;
+}
+
+/* Screenshot controls */
+.view-controls {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.capture-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.capture-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.capture-btn i {
+    font-size: 1.1em;
+}
+
+/* Aggiorna i controlli del trimestre */
+.quarter-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.quarter-controls h2 {
+    margin: 0 2rem;
+}
+
+/* Screenshot loading */
+.screenshot-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite, scaleIn var(--transition-smooth);
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Screenshot loading overlay */
+.screenshot-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.screenshot-loading-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* Stili per la cattura screenshot */
+.calendar-view, .quarter-view {
+    background: white !important;
+    overflow: visible !important;
+}
+
+.fc {
+    background: white !important;
+    overflow: visible !important;
+}
+
+.fc-view {
+    background: white !important;
+}
+
+.fc-scrollgrid {
+    border: 1px solid #ddd !important;
+}
+
+/* Assicurati che tutti gli elementi del calendario siano visibili */
+.fc-view-harness {
+    height: auto !important;
+    overflow: visible !important;
+}
+
+.fc-scroller {
+    overflow: visible !important;
+}
+
+.fc-scroller-liquid-absolute {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+/* Shifts Grid View */
+.shifts-grid-view {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem;
+    margin-top: 1rem;
+    overflow-x: auto;
+}
+
+.month-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.shifts-grid {
+    overflow-x: auto;
+}
+
+#shiftsGridTable {
+    border-collapse: collapse;
+    min-width: 100%;
+}
+
+#shiftsGridTable th,
+#shiftsGridTable td {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    text-align: center;
+    min-width: 40px;
+}
+
+#shiftsGridTable th:first-child,
+#shiftsGridTable td:first-child,
+#shiftsGridTable th:nth-child(2),
+#shiftsGridTable td:nth-child(2) {
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 1;
+    min-width: 120px;
+    text-align: left;
+}
+
+#shiftsGridTable th:nth-child(2),
+#shiftsGridTable td:nth-child(2) {
+    left: 120px;
+}
+
+#shiftsGridTable th.weekend,
+#shiftsGridTable td.weekend {
+    background-color: #f8f9fa;
+}
+
+#shiftsGridTable td.shift-cell {
+    font-weight: normal;
+    font-size: 0.9em;
+    color: white;
+    transition: opacity 0.2s;
+    height: 30px;
+}
+
+#shiftsGridTable td.shift-cell:hover {
+    opacity: 0.9;
+}
+
+/* Stili per i weekend */
+#shiftsGridTable th.weekend,
+#shiftsGridTable td.weekend {
+    background-color: #f8f9fa;
+    color: #666;
+    font-size: 0.8em;
+}
+
+/* Colori di sfondo per le celle */
+.morning-bg { background-color: var(--morning-color) !important; }
+.evening-bg { background-color: var(--evening-color) !important; }
+.on-call-bg { background-color: var(--oncall-color) !important; }
+.vacation-bg { background-color: var(--vacation-color) !important; }
+.law104-bg { background-color: var(--law104-color) !important; }
+.permit-bg { background-color: var(--permit-color) !important; }
+
+/* Migliora la visibilità del tooltip */
+.shift-cell:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Tooltip per le celle */
+.shift-cell {
+    position: relative;
+}
+
+.shift-cell:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+/* Stili per l'intestazione dei giorni */
+#shiftsGridTable th {
+    padding: 0.25rem;
+    min-height: 50px;
+}
+
+.day-number {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.day-name {
+    font-size: 0.8em;
+    color: #666;
+}
+
+/* Stili per i weekend */
+#shiftsGridTable th.weekend .day-name {
+    color: #e74c3c;
+}
+
+#shiftsGridTable td.weekend {
+    background-color: #f8f9fa;
+    color: #666;
+    font-size: 0.8em;
+}
+
+/* Stili per il ruolo nella tabella dipendenti */
+#techniciansTable td.role {
+    text-transform: capitalize;
+}
+
+.role-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: 500;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-smooth);
+}
+
+.role-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.role-tecnico { background: var(--role-tecnico); }
+.role-ufficio_tecnico { background: var(--role-ufficio); }
+.role-amministrazione { background: var(--role-amministrazione); }
+.role-contabilita { background: var(--role-contabilita); color: var(--text-color); }
+
+/* Stili per il select del ruolo */
+#technicianRole {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+/* Stili per la vista dipendenti */
+.technicians-view {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 2rem;
+    margin-top: 1rem;
+}
+
+.technicians-view h2 {
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+}
+
+.technicians-form-container {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.technicians-table-container {
+    margin-top: 2rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.secondary-button {
+    background-color: #95a5a6;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.secondary-button:hover {
+    background-color: #7f8c8d;
+}
+
+#techniciansTable {
+    width: 100%;
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+}
+
+#techniciansTable th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+}
+
+#techniciansTable td {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+#techniciansTable tr:hover {
+    background-color: #f5f6fa;
+} 

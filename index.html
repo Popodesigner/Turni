@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Turni Tecnici</title>
+    <!-- App CSS -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- Aggiungi prima degli altri script -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Barra laterale -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#" id="viewTable">Vista Tabella</a></li>
+                    <li><a href="#" id="viewCalendar">Vista Calendario</a></li>
+                    <li><a href="#" id="viewQuarter">Vista Trimestrale</a></li>
+                    <li><a href="#" id="viewShifts">Vista Turni</a></li>
+                    <li><a href="#" id="viewStats">Statistiche</a></li>
+                    <li><a href="#" id="manageTechnicians">Gestione Dipendenti</a></li>
+                    <li><a href="#" id="importExcel">Importa Excel</a></li>
+                    <li><a href="#" id="exportPDF">Esporta PDF</a></li>
+                    <li class="separator"></li>
+                    <li><a href="#" id="saveBackup">Salva Backup</a></li>
+                    <li><a href="#" id="loadBackup">Carica Backup</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenuto principale -->
+        <main>
+            <!-- Filtri -->
+            <section class="filters">
+                <h3>Filtri</h3>
+                <div class="checkbox-filters">
+                    <div class="filter-group">
+                        <h4>Turni</h4>
+                        <label>
+                            <input type="checkbox" id="showMorningShift" checked>
+                            <span class="shift-tag shift-morning">Turno Mattina</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="showEveningShift" checked>
+                            <span class="shift-tag shift-evening">Turno Sera</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="showOnCall" checked>
+                            <span class="shift-tag shift-on-call">Reperibilità</span>
+                        </label>
+                    </div>
+                    <div class="filter-group">
+                        <h4>Permessi</h4>
+                        <label>
+                            <input type="checkbox" id="showVacations" checked>
+                            <span class="shift-tag shift-vacation">Ferie</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="showLaw104" checked>
+                            <span class="shift-tag shift-law104">Legge 104</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="showPermits" checked>
+                            <span class="shift-tag shift-permit">Altri Permessi</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dopo la sezione dei filtri -->
+            <section class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="quickSearch" placeholder="Cerca per tecnico, tipo o data...">
+                </div>
+                <div class="date-filter">
+                    <label>Periodo:</label>
+                    <select id="periodFilter">
+                        <option value="all">Tutti</option>
+                        <option value="today">Oggi</option>
+                        <option value="week">Questa settimana</option>
+                        <option value="month">Questo mese</option>
+                        <option value="custom">Personalizzato</option>
+                    </select>
+                    <div id="customDateRange" style="display: none;">
+                        <input type="date" id="filterDateStart">
+                        <input type="date" id="filterDateEnd">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Aggiungiamo un pulsante per inserire nuovo turno -->
+            <section class="actions">
+                <button id="addShift" class="primary-button">Nuovo Turno</button>
+            </section>
+
+            <!-- Tabella dei turni -->
+            <section class="shifts-table">
+                <table id="shiftsTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="selectAll" title="Seleziona tutti (⌘A)">
+                                Data
+                            </th>
+                            <th>Tecnico</th>
+                            <th>Tipo</th>
+                            <th>Orario</th>
+                            <th>Note</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shiftsTableBody">
+                        <!-- I dati verranno inseriti dinamicamente -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Dopo la tabella dei turni -->
+            <div id="totalShifts">Totale turni: 0</div>
+
+            <!-- Calendario -->
+            <section class="calendar-view" style="display: none;">
+                <div class="view-controls">
+                    <button id="captureCalendar" class="capture-btn">
+                        <i class="fas fa-camera"></i> Screenshot
+                    </button>
+                </div>
+                <div id="calendar"></div>
+            </section>
+
+            <!-- Aggiungiamo la sezione per la vista trimestrale -->
+            <section class="quarter-view" style="display: none;">
+                <div class="quarter-controls">
+                    <button id="prevQuarter" class="control-button">&lt; Precedente</button>
+                    <h2 id="quarterTitle">Trimestre</h2>
+                    <button id="nextQuarter" class="control-button">Successivo &gt;</button>
+                    <button id="captureQuarter" class="capture-btn">
+                        <i class="fas fa-camera"></i> Screenshot
+                    </button>
+                </div>
+                <div class="quarter-grid">
+                    <div id="month1" class="month-calendar"></div>
+                    <div id="month2" class="month-calendar"></div>
+                    <div id="month3" class="month-calendar"></div>
+                </div>
+            </section>
+
+            <!-- Sezione Statistiche -->
+            <section class="statistics" style="display: none;">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Distribuzione Turni per Dipendente</h3>
+                        <div class="chart-container">
+                            <canvas id="technicianChart"></canvas>
+                        </div>
+                        <div class="chart-legend">
+                            <!-- La legenda verrà generata dinamicamente -->
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Riepilogo Mensile</h3>
+                        <div id="monthlyStats" class="monthly-stats-container"></div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Distribuzione Tipi di Turno</h3>
+                        <div class="chart-container">
+                            <canvas id="shiftTypeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Aggiungi la nuova sezione -->
+            <section class="shifts-grid-view" style="display: none;">
+                <div class="month-header">
+                    <button class="control-button" id="prevMonth">&lt; Precedente</button>
+                    <h2 id="currentMonth">Gennaio 2024</h2>
+                    <button class="control-button" id="nextMonth">Successivo &gt;</button>
+                </div>
+                <div class="shifts-grid">
+                    <table id="shiftsGridTable">
+                        <thead>
+                            <tr>
+                                <th>Cognome</th>
+                                <th>Nome</th>
+                                <!-- Le colonne dei giorni verranno generate dinamicamente -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- I dati verranno inseriti dinamicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Rimuovi il modal dei tecnici e aggiungi una nuova sezione -->
+            <section class="technicians-view" style="display: none;">
+                <h2>Gestione Dipendenti</h2>
+                
+                <!-- Form per aggiungere/modificare dipendenti -->
+                <div class="technicians-form-container">
+                    <form id="technicianForm">
+                        <input type="hidden" id="technicianId">
+                        <div class="form-group">
+                            <label for="technicianName">Nome e Cognome:</label>
+                            <input type="text" id="technicianName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="technicianRole">Ruolo:</label>
+                            <select id="technicianRole" required>
+                                <option value="tecnico">Tecnico</option>
+                                <option value="ufficio_tecnico">Ufficio Tecnico</option>
+                                <option value="amministrazione">Amministrazione</option>
+                                <option value="contabilita">Contabilità</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="technicianEmail">Email:</label>
+                            <input type="email" id="technicianEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="technicianPhone">Telefono:</label>
+                            <input type="tel" id="technicianPhone">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="primary-button">Salva Dipendente</button>
+                            <button type="button" id="cancelEdit" class="secondary-button" style="display: none;">Annulla</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tabella dei dipendenti -->
+                <div class="technicians-table-container">
+                    <table id="techniciansTable">
+                        <thead>
+                            <tr>
+                                <th>Nome e Cognome</th>
+                                <th>Ruolo</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- I dati verranno inseriti dinamicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modale per inserimento/modifica turno -->
+    <div id="shiftModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Gestione Turno</h2>
+            
+            <form id="shiftForm">
+                <input type="hidden" id="shiftId">
+                <div class="form-group date-range-group">
+                    <div>
+                        <label for="shiftDateStart">Data Inizio:</label>
+                        <input type="date" id="shiftDateStart" required>
+                    </div>
+                    <div>
+                        <label for="shiftDateEnd">Data Fine:</label>
+                        <input type="date" id="shiftDateEnd">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="shiftTechnician">Tecnico:</label>
+                    <select id="shiftTechnician" required>
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tipo:</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="shiftType" value="morning" required> 
+                            <span class="shift-tag shift-morning">Turno Mattina (7:00 - 16:00)</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="shiftType" value="evening">
+                            <span class="shift-tag shift-evening">Turno Sera (14:00 - 22:00)</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="shiftType" value="on-call">
+                            <span class="shift-tag shift-on-call">Reperibilità (24h)</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="shiftType" value="vacation">
+                            <span class="shift-tag shift-vacation">Ferie</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="shiftType" value="law104">
+                            <span class="shift-tag shift-law104">Legge 104</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="shiftType" value="permit">
+                            <span class="shift-tag shift-permit">Altro Permesso</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group" id="timeGroup">
+                    <label for="shiftTime">Orario:</label>
+                    <select id="shiftTime">
+                        <option value="07:00-16:00">07:00 - 16:00</option>
+                        <option value="14:00-22:00">14:00 - 22:00</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="shiftNotes">Note:</label>
+                    <textarea id="shiftNotes"></textarea>
+                </div>
+                <button type="submit">Salva Turno</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Aggiungiamo jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- FullCalendar (versione bundle) -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+
+    <!-- Aggiungi prima degli altri script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Scripts -->
+    <script src="scripts/main.js"></script>
+    <script src="scripts/import.js"></script>
+    <script src="scripts/export.js"></script>
+    <script src="scripts/filters.js"></script>
+    <script src="scripts/calendar.js"></script>
+    <script src="scripts/technicians.js"></script>
+    <script src="scripts/shifts.js"></script>
+    <script src="scripts/statistics.js"></script>
+    <script src="scripts/backup.js"></script>
+    <script src="scripts/quarter-view.js"></script>
+    <!-- Prima degli altri script -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="scripts/screenshot.js"></script>
+    <script src="scripts/shifts-grid.js"></script>
+</body>
+</html> 
